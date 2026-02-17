@@ -4,7 +4,7 @@ This guide explains how to deploy the TejX Homepage to GitHub Pages using GitHub
 
 ## 🚀 Automatic Deployment (Recommended)
 
-The project is configured with a GitHub Actions workflow that automatically deploys the site whenever you push changes to the `main` branch.
+The project is configured with a GitHub Actions workflow that automatically deploys the site whenever you push changes to the `main` or `init-release` branches.
 
 ### Prerequisites
 

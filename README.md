@@ -49,7 +49,7 @@ TejX is a high-performance, type-safe scripting language designed for humans and
 
 This project is configured to deploy automatically to **GitHub Pages** using GitHub Actions.
 
-- The deployment triggers on every push to the `main` branch.
+- The deployment triggers on every push to the `main` or `init-release` branches.
 - The build process uses `yarn build` and uploads the `dist` directory.
 - Configuration is handled via the `base` property in `vite.config.ts`.
 
