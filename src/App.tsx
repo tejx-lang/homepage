@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Documentation from "./pages/Documentation";
 import GetStarted from "./pages/GetStarted";
+import PlaygroundPage from "./pages/PlaygroundPage";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/docs" element={<Documentation />} />
             <Route path="/get-started" element={<GetStarted />} />
+            <Route path="/playground" element={<PlaygroundPage />} />
           </Routes>
         </main>
 

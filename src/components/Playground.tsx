@@ -21,7 +21,11 @@ let setting = data?.config?.setting ?? "Default";
 print("Setting: ", setting);
 `;
 
-const Playground: React.FC = () => {
+interface PlaygroundProps {
+  height?: string | number;
+}
+
+const Playground: React.FC<PlaygroundProps> = ({ height = "600px" }) => {
   const [code, setCode] = useState(DEFAULT_CODE);
   const [output, setOutput] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
@@ -47,7 +51,7 @@ const Playground: React.FC = () => {
       className="playground-container glass-card"
       style={{
         padding: "1rem",
-        height: "600px",
+        height: height,
         display: "flex",
         flexDirection: "column",
       }}

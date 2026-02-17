@@ -1,73 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Github } from "lucide-react";
+import { Github, Menu, X } from "lucide-react";
 import { APP_CONFIG, ASSETS } from "../lib/constants";
 
 const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navLinks = [
+    { to: "/docs", label: "Docs" },
+    { to: "/get-started", label: "Get Started" },
+    { to: "/playground", label: "Playground" },
+  ];
+
   return (
-    <nav
-      className="container"
-      style={{
-        height: "80px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <Link
-        to="/"
-        style={{
-          fontSize: "1.5rem",
-          fontWeight: 800,
-          letterSpacing: "-1px",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          color: "inherit",
-          textDecoration: "none",
-        }}
-      >
-        <img
-          src={ASSETS.TEJX_LOGO}
-          alt={APP_CONFIG.NAME}
-          style={{ height: "32px", width: "32px" }}
-        />
-        {APP_CONFIG.NAME.split("X")[0]}
-        <span style={{ color: "var(--accent-primary)" }}>X</span>
-      </Link>
-      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-        <Link to="/docs" style={{ fontSize: "0.9rem", color: "#94a3b8" }}>
-          Docs
-        </Link>
+    <nav className="relative z-50">
+      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+        {/* Logo */}
         <Link
-          to="/get-started"
-          style={{ fontSize: "0.9rem", color: "#94a3b8" }}
+          to="/"
+          className="flex items-center gap-3 text-xl font-black tracking-tighter hover:opacity-80 transition-opacity"
         >
-          Get Started
+          <img
+            src={ASSETS.TEJX_LOGO}
+            alt={APP_CONFIG.NAME}
+            className="w-8 h-8"
+          />
+          <span className="hidden sm:inline">
+            {APP_CONFIG.NAME.split("X")[0]}
+          </span>
+          <span className="text-[var(--accent-primary)]">X</span>
         </Link>
-        <a href="/#playground" style={{ fontSize: "0.9rem", color: "#94a3b8" }}>
-          Playground
-        </a>
-        <a
-          href={APP_CONFIG.GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="glass-card"
-          style={{
-            padding: "0.5rem 1rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontSize: "0.9rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <a
+            href={APP_CONFIG.GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-card flex items-center gap-2 px-4 py-2 text-sm font-bold border border-white/10 hover:border-purple-500/50 transition-all"
+          >
+            <Github size={18} /> <span>GitHub</span>
+          </a>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2 text-gray-400 hover:text-white"
         >
-          <Github size={18} /> GitHub
-        </a>
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-20 left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-white/10 p-6 md:hidden z-50"
+          >
+            <div className="flex flex-col gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-bold text-gray-300 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <a
+                href={APP_CONFIG.GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 font-bold"
+              >
+                <Github size={20} /> GitHub
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
+
+import { motion, AnimatePresence } from "framer-motion";
 
 export default Navbar;

@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Zap, Shield, Cpu, Code, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import Playground from "../components/Playground";
 import { APP_CONFIG } from "../lib/constants";
 
 const Home: React.FC = () => {
@@ -164,25 +163,6 @@ const Home: React.FC = () => {
             </motion.div>
           ))}
         </div>
-      </section>
-
-      <section id="playground" className="container" style={{ padding: "0" }}>
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <h2
-            style={{
-              fontSize: "2.5rem",
-              fontWeight: 700,
-              marginBottom: "0.5rem",
-            }}
-          >
-            Try it in your browser.
-          </h2>
-          <p style={{ color: "#64748b" }}>
-            No installation required. Write, run, and experiment with TejX
-            instantly.
-          </p>
-        </div>
-        <Playground />
       </section>
     </>
   );
