@@ -12,7 +12,8 @@ import {
   ExternalLink,
   Info,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import GetStarted from "./GetStarted";
 
 interface DocSection {
   id: string;
@@ -23,10 +24,19 @@ interface DocSection {
 }
 
 const Documentation: React.FC = () => {
-  const [activeSection, setActiveSection] = useState("intro");
+  const { sectionId } = useParams<{ sectionId: string }>();
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const activeSection = sectionId || "intro";
+
   const sections: DocSection[] = [
+    {
+      id: "get-started",
+      title: "Get Started",
+      icon: Zap,
+      content: <GetStarted />,
+    },
     {
       id: "intro",
       title: "Introduction",
@@ -247,7 +257,7 @@ func main() {
   ];
 
   const scrollToSection = (id: string) => {
-    setActiveSection(id);
+    navigate(`/docs/${id}`);
     setIsSidebarOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -279,53 +289,40 @@ func main() {
                 Docs
               </span>
             </div>
-
             <nav className="space-y-8">
-              {/* Special Link: Get Started */}
-              <div>
-                <p className="text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-4 px-2">
-                  Onboarding
-                </p>
-                <Link
-                  to="/get-started"
-                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-all text-purple-400 group border border-purple-500/10"
-                >
-                  <div className="flex items-center gap-3">
-                    <Zap size={18} fill="currentColor" />
-                    <span className="font-bold">Get Started</span>
-                  </div>
-                  <ChevronRight
-                    size={16}
-                    className="group-hover:translate-x-1 transition-transform"
-                  />
-                </Link>
-              </div>
-
               {/* Core Documentation Links */}
               <div>
                 <p className="text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-4 px-2">
-                  Reference
+                  Content
                 </p>
                 <div className="space-y-1">
                   {sections.map((section) => (
                     <div key={section.id}>
                       <button
                         onClick={() => scrollToSection(section.id)}
-                        className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                        className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${
                           activeSection === section.id
                             ? "bg-purple-500/10 text-white font-bold border border-purple-500/20 shadow-lg shadow-purple-500/5"
                             : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
                         }`}
                       >
-                        <section.icon
-                          size={18}
-                          className={
-                            activeSection === section.id
-                              ? "text-purple-500"
-                              : "text-gray-500"
-                          }
-                        />
-                        <span>{section.title}</span>
+                        <div className="flex items-center gap-3">
+                          <section.icon
+                            size={18}
+                            className={
+                              activeSection === section.id
+                                ? "text-purple-500"
+                                : "text-gray-500"
+                            }
+                          />
+                          <span>{section.title}</span>
+                        </div>
+                        {activeSection === section.id && (
+                          <motion.div
+                            layoutId="active-indicator"
+                            className="w-1 h-4 bg-purple-500 rounded-full"
+                          />
+                        )}
                       </button>
 
                       {/* Subsections */}

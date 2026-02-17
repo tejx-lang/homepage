@@ -1,10 +1,13 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Documentation from "./pages/Documentation";
-import GetStarted from "./pages/GetStarted";
 import PlaygroundPage from "./pages/PlaygroundPage";
 
 const App: React.FC = () => {
@@ -18,8 +21,13 @@ const App: React.FC = () => {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/docs" element={<Documentation />} />
-            <Route path="/get-started" element={<GetStarted />} />
+            <Route path="/docs" element={<Documentation />}>
+              <Route path=":sectionId" element={<Documentation />} />
+            </Route>
+            <Route
+              path="/get-started"
+              element={<Navigate to="/docs/get-started" replace />}
+            />
             <Route path="/playground" element={<PlaygroundPage />} />
           </Routes>
         </main>

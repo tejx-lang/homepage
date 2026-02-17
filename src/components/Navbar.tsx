@@ -7,8 +7,8 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { to: "/docs", label: "Docs" },
-    { to: "/get-started", label: "Get Started" },
+    { to: "/docs/intro", label: "Docs" },
+    { to: "/docs/get-started", label: "Get Started" },
     { to: "/playground", label: "Playground" },
   ];
 
