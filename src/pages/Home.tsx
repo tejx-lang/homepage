@@ -1,167 +1,203 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Zap, Shield, Cpu, Code, ArrowRight } from "lucide-react";
+import { Zap, Shield, Cpu, Code, ArrowRight, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { APP_CONFIG } from "../lib/constants";
+import CodeShowcase from "../components/CodeShowcase";
 
 const Home: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section
-        className="container"
-        style={{ textAlign: "center", paddingTop: "6rem" }}
-      >
-        <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div
-            className="glass-card"
-            style={{
-              display: "inline-flex",
-              padding: "0.4rem 1rem",
-              fontSize: "0.8rem",
-              color: "var(--accent-primary)",
-              marginBottom: "2rem",
-              border: "1px solid rgba(124, 58, 237, 0.3)",
-            }}
+      <section className="container pt-32 pb-20 relative overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-20 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/30 to-blue-500/30 blur-[100px] rounded-full" />
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            v{APP_CONFIG.VERSION} is now live ✨
-          </div>
-          <h1
-            style={{
-              fontSize: "clamp(3rem, 8vw, 5rem)",
-              fontWeight: 800,
-              lineHeight: 1.1,
-              marginBottom: "1.5rem",
-            }}
-          >
-            The Future of <br />
-            <span className="gradient-text">Modern Scripting</span>
-          </h1>
-          <p
-            style={{
-              maxWidth: "600px",
-              margin: "0 auto 3rem",
-              color: "#94a3b8",
-              fontSize: "1.2rem",
-            }}
-          >
-            {APP_CONFIG.DESCRIPTION}
-          </p>
-          <div
-            style={{ display: "flex", justifyContent: "center", gap: "1.5rem" }}
-          >
-            <Link
-              to="/get-started"
-              className="glass-card"
-              style={{
-                background: "var(--accent-primary)",
-                color: "white",
-                padding: "1rem 2rem",
-                fontWeight: 600,
-                fontSize: "1rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                textDecoration: "none",
-              }}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-bold mb-6 backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+              </span>
+              v{APP_CONFIG.VERSION} is now live
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
+              The Future of <br />
+              <span className="gradient-text">Modern Scripting</span>
+            </h1>
+
+            <p className="text-xl text-gray-400 mb-8 leading-relaxed max-w-lg">
+              {APP_CONFIG.DESCRIPTION} Build high-performance applications with
+              the simplicity of Python and the speed of C.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/get-started"
+                className="flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-100 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+              >
+                Start Building <ArrowRight size={20} />
+              </Link>
+              <Link
+                to="/docs"
+                className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/10 hover:bg-white/5 transition-colors font-bold"
+              >
+                Documentation
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* Hero Visual */}
+          <div className="relative">
+            <CodeShowcase />
+            {/* Floating Elements */}
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-10 -right-10 p-4 glass-card bg-black/40 border-purple-500/30 backdrop-blur-xl z-20 hidden md:block"
             >
-              Get Started <ArrowRight size={20} />
-            </Link>
-            <Link
-              to="/docs"
-              className="glass-card btn-outline"
-              style={{
-                padding: "1rem 2rem",
-                fontWeight: 600,
-                fontSize: "1rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Documentation
-            </Link>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/20 text-purple-300">
+                  <Zap size={20} />
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 uppercase font-bold">
+                    Performance
+                  </div>
+                  <div className="font-mono font-bold text-white">
+                    Native Speed
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="container">
-        <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-          <h2
-            style={{
-              fontSize: "2.5rem",
-              fontWeight: 700,
-              marginBottom: "1rem",
-            }}
-          >
-            Built for performance.
+      {/* Stats Strip */}
+      <section className="border-y border-white/5 bg-white/[0.02]">
+        <div className="container py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { label: "Runtime", value: "Zero GC" },
+              { label: "Backend", value: "LLVM 18" },
+              { label: "Safety", value: "Borrow Checker" },
+              { label: "License", value: "Open Source" },
+            ].map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-2xl md:text-3xl font-black mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Deep Dive Features */}
+      <section id="features" className="container py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-black mb-6">
+            Built for Performance
           </h2>
-          <p style={{ color: "#64748b" }}>
-            Experience the power of a compiler with the simplicity of a script.
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Experience the power of a systems language with the ergonomics of a
+            scripting language.
           </p>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "2rem",
-          }}
-        >
+
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {[
             {
-              icon: <Zap color="#7c3aed" />,
-              title: "Blazing Fast",
-              desc: "Compiled with LLVM for native performance on any hardware.",
+              icon: Zap,
+              color: "text-purple-400",
+              bg: "bg-purple-500/10 border-purple-500/20",
+              title: "Blazing Fast Execution",
+              desc: "TejX compiles directly to native machine code via LLVM, ensuring your applications run at near-C speeds without the overhead of a virtual machine.",
             },
             {
-              icon: <Shield color="#3b82f6" />,
-              title: "Type Safe",
-              desc: "Advanced static analysis catches bugs before they even happen.",
+              icon: Shield,
+              color: "text-blue-400",
+              bg: "bg-blue-500/10 border-blue-500/20",
+              title: "Memory Safety",
+              desc: "Our unique single-ownership model prevents data races and memory leaks at compile time, eliminating the need for a garbage collector.",
             },
             {
-              icon: <Cpu color="#10b981" />,
-              title: "Modern Runtime",
-              desc: "Native support for async/await, concurrency, and advanced data structures.",
+              icon: Cpu,
+              color: "text-green-400",
+              bg: "bg-green-500/10 border-green-500/20",
+              title: "Modern Concurrency",
+              desc: "Built-in async/await primitives and a lightweight fiber-based runtime make writing concurrent code safe and intuitive.",
             },
             {
-              icon: <Code color="#f59e0b" />,
-              title: "Intuitive Syntax",
-              desc: "Familiar feel with powerful features like pattern matching and optional chaining.",
+              icon: Code,
+              color: "text-yellow-400",
+              bg: "bg-yellow-500/10 border-yellow-500/20",
+              title: "Developer Ergonomics",
+              desc: "Enjoy modern features like pattern matching, optional chaining, and type inference without sacrificing performance.",
             },
           ].map((feat, i) => (
             <motion.div
               key={i}
-              whileHover={{ y: -10 }}
-              className="glass-card"
-              style={{ padding: "2rem" }}
+              whileHover={{ y: -5 }}
+              className={`p-8 rounded-3xl border ${feat.bg} transition-all hover:bg-opacity-20`}
             >
               <div
-                style={{
-                  marginBottom: "1.5rem",
-                  background: "rgba(255,255,255,0.05)",
-                  padding: "1rem",
-                  borderRadius: "16px",
-                  width: "fit-content",
-                }}
+                className={`w-12 h-12 rounded-xl ${feat.bg} ${feat.color} flex items-center justify-center mb-6`}
               >
-                {feat.icon}
+                <feat.icon size={24} />
               </div>
-              <h3
-                style={{
-                  fontSize: "1.5rem",
-                  fontWeight: 600,
-                  marginBottom: "0.8rem",
-                }}
-              >
-                {feat.title}
-              </h3>
-              <p style={{ color: "#94a3b8" }}>{feat.desc}</p>
+              <h3 className="text-2xl font-bold mb-4">{feat.title}</h3>
+              <p className="text-gray-400 leading-relaxed text-lg">
+                {feat.desc}
+              </p>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="container pb-24">
+        <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-b from-white/5 to-black p-12 text-center">
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-5xl font-black mb-6">
+              Ready to start building?
+            </h2>
+            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+              Join the developers building the next generation of
+              high-performance applications with TejX.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to="/get-started"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-gray-100 transition-colors"
+              >
+                Get Started Now
+              </Link>
+              <a
+                href={APP_CONFIG.GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors font-bold flex items-center justify-center gap-2"
+              >
+                <Github size={20} /> Star on GitHub
+              </a>
+            </div>
+          </div>
+
+          {/* Background Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-purple-500/10 blur-[100px] pointer-events-none" />
         </div>
       </section>
     </>

@@ -25,10 +25,7 @@ const Navbar: React.FC = () => {
             alt={APP_CONFIG.NAME}
             className="w-8 h-8"
           />
-          <span className="hidden sm:inline">
-            {APP_CONFIG.NAME.split("X")[0]}
-          </span>
-          <span className="text-[var(--accent-primary)]">X</span>
+          <span className="hidden sm:inline">{APP_CONFIG.NAME}</span>
         </Link>
 
         {/* Desktop Navigation */}

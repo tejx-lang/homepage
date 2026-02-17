@@ -9,10 +9,9 @@ import {
   Zap,
   Menu,
   X,
-  ExternalLink,
   Info,
 } from "lucide-react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import GetStarted from "./GetStarted";
 
 interface DocSection {
@@ -32,18 +31,16 @@ const Documentation: React.FC = () => {
 
   const sections: DocSection[] = [
     {
-      id: "get-started",
-      title: "Get Started",
-      icon: Zap,
-      content: <GetStarted />,
-    },
-    {
       id: "intro",
       title: "Introduction",
       icon: Book,
+      subsections: [
+        { id: "overview", title: "Overview" },
+        { id: "principles", title: "Core Principles" },
+      ],
       content: (
         <>
-          <h2 className="text-4xl font-black mb-6 tracking-tight">
+          <h2 id="overview" className="text-4xl font-black mb-6 tracking-tight">
             Introduction
           </h2>
           <p className="text-xl text-gray-400 mb-8 leading-relaxed">
@@ -74,7 +71,9 @@ const Documentation: React.FC = () => {
             </div>
           </div>
 
-          <h3 className="text-2xl font-bold mb-4">Core Principles</h3>
+          <h3 id="principles" className="text-2xl font-bold mb-4">
+            Core Principles
+          </h3>
           <ul className="space-y-4 mb-8 text-gray-300">
             <li className="flex gap-3">
               <ChevronRight
@@ -109,6 +108,18 @@ const Documentation: React.FC = () => {
           </ul>
         </>
       ),
+    },
+    {
+      id: "get-started",
+      title: "Get Started",
+      icon: Zap,
+      subsections: [
+        { id: "install", title: "Quick Install" },
+        { id: "init", title: "Initialize" },
+        { id: "example", title: "Create Example" },
+        { id: "run", title: "Build & Run" },
+      ],
+      content: <GetStarted />,
     },
     {
       id: "basics",
@@ -171,9 +182,18 @@ let is_valid: bool = true;
       id: "functions",
       title: "Functions",
       icon: Zap,
+      subsections: [
+        { id: "func-basics", title: "Basics" },
+        { id: "func-entry", title: "Entry Point" },
+      ],
       content: (
         <>
-          <h2 className="text-4xl font-black mb-6 tracking-tight">Functions</h2>
+          <h2
+            id="func-basics"
+            className="text-4xl font-black mb-6 tracking-tight"
+          >
+            Functions
+          </h2>
           <p className="text-xl text-gray-400 mb-8">
             Functions are first-class citizens in TejX.
           </p>
@@ -189,7 +209,10 @@ func main() {
 }`}
             </pre>
           </div>
-          <div className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/10 mb-8">
+          <div
+            id="func-entry"
+            className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/10 mb-8"
+          >
             <h4 className="flex items-center gap-2 font-bold text-blue-300 mb-2">
               <Info size={18} /> Entry Point
             </h4>
@@ -206,9 +229,13 @@ func main() {
       id: "memory",
       title: "Memory Model",
       icon: Layers,
+      subsections: [{ id: "memory-rules", title: "Ownership Rules" }],
       content: (
         <>
-          <h2 className="text-4xl font-black mb-6 tracking-tight">
+          <h2
+            id="memory-rules"
+            className="text-4xl font-black mb-6 tracking-tight"
+          >
             Memory Model
           </h2>
           <p className="text-xl text-gray-400 mb-8">
@@ -262,6 +289,25 @@ func main() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const scrollToSubsection = (sectionId: string, subsectionId: string) => {
+    setIsSidebarOpen(false);
+    if (activeSection !== sectionId) {
+      navigate(`/docs/${sectionId}`);
+      // Wait for navigation and render
+      setTimeout(() => {
+        const element = document.getElementById(subsectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(subsectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020202]">
       {/* Mobile Sidebar Toggle */}
@@ -277,7 +323,7 @@ func main() {
         <aside
           className={`
           fixed inset-0 z-40 bg-black/95 backdrop-blur-xl md:bg-transparent md:backdrop-blur-none
-          md:relative md:block md:w-72 md:shrink-0 md:top-24 sticky top-24 h-fit
+          md:sticky md:top-24 md:block md:w-72 md:shrink-0 h-fit
           transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
@@ -338,6 +384,9 @@ func main() {
                               {section.subsections.map((sub) => (
                                 <button
                                   key={sub.id}
+                                  onClick={() =>
+                                    scrollToSubsection(section.id, sub.id)
+                                  }
                                   className="w-full text-left px-3 py-1.5 text-[11px] text-gray-500 hover:text-purple-400 transition-colors hover:bg-white/5 rounded-lg"
                                 >
                                   {sub.title}
@@ -348,31 +397,6 @@ func main() {
                       </AnimatePresence>
                     </div>
                   ))}
-                </div>
-              </div>
-
-              {/* External Links */}
-              <div>
-                <p className="text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-4 px-2">
-                  Community
-                </p>
-                <div className="space-y-1">
-                  <a
-                    href="https://github.com/tejx-lang"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all group"
-                  >
-                    <Code
-                      size={18}
-                      className="text-gray-400 group-hover:text-purple-500 transition-colors"
-                    />
-                    <span>GitHub</span>
-                    <ExternalLink
-                      size={12}
-                      className="ml-auto opacity-50 group-hover:opacity-100 transition-opacity"
-                    />
-                  </a>
                 </div>
               </div>
             </nav>
