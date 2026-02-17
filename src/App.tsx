@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Zap, Shield, Cpu, Code, Github, ArrowRight } from "lucide-react";
 import Playground from "./components/Playground";
+import { APP_CONFIG, ASSETS } from "./lib/constants";
 
 const App: React.FC = () => {
   return (
@@ -19,9 +20,22 @@ const App: React.FC = () => {
         }}
       >
         <div
-          style={{ fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-1px" }}
+          style={{
+            fontSize: "1.5rem",
+            fontWeight: 800,
+            letterSpacing: "-1px",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
         >
-          Tej<span style={{ color: "var(--accent-primary)" }}>X</span>
+          <img
+            src={ASSETS.TEJX_LOGO}
+            alt={APP_CONFIG.NAME}
+            style={{ height: "32px", width: "32px" }}
+          />
+          {APP_CONFIG.NAME.split("X")[0]}
+          <span style={{ color: "var(--accent-primary)" }}>X</span>
         </div>
         <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
           <a href="#features" style={{ fontSize: "0.9rem", color: "#94a3b8" }}>
@@ -34,7 +48,7 @@ const App: React.FC = () => {
             Playground
           </a>
           <a
-            href="https://github.com"
+            href={APP_CONFIG.GITHUB_URL}
             target="_blank"
             className="glass-card"
             style={{
@@ -71,7 +85,7 @@ const App: React.FC = () => {
               border: "1px solid rgba(124, 58, 237, 0.3)",
             }}
           >
-            v1.0.0 is now live ✨
+            v{APP_CONFIG.VERSION} is now live ✨
           </div>
           <h1
             style={{
@@ -92,8 +106,7 @@ const App: React.FC = () => {
               fontSize: "1.2rem",
             }}
           >
-            TejX is a high-performance, type-safe scripting language designed
-            for humans and built for speed.
+            {APP_CONFIG.DESCRIPTION}
           </p>
           <div
             style={{ display: "flex", justifyContent: "center", gap: "1.5rem" }}
@@ -234,12 +247,25 @@ const App: React.FC = () => {
         }}
       >
         <div
-          style={{ fontWeight: 800, fontSize: "1.2rem", marginBottom: "1rem" }}
+          style={{
+            fontWeight: 800,
+            fontSize: "1.2rem",
+            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+          }}
         >
-          TejX
+          <img
+            src={ASSETS.TEJX_LOGO}
+            alt={APP_CONFIG.NAME}
+            style={{ height: "24px", width: "24px" }}
+          />
+          {APP_CONFIG.NAME}
         </div>
         <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
-          © 2026 TejX Language Team. Built with speed and safety.
+          {APP_CONFIG.FOOTER_TEXT}
         </p>
       </footer>
     </div>
