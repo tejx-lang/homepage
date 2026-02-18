@@ -44,8 +44,8 @@ const InstallBlock: React.FC<{ command: string; label: string }> = ({
 
 const GetStarted: React.FC = () => {
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-[#020202] text-white flex flex-col items-center justify-center py-20 relative overflow-hidden">
-      <div className="container max-w-4xl relative z-10 px-6">
+    <div className="w-full text-white">
+      <div className="w-full">
         <div className="flex flex-col gap-6">
           {/* Step 1: Install */}
           <motion.div
@@ -68,12 +68,12 @@ const GetStarted: React.FC = () => {
             <div className="w-full max-w-xl">
               <InstallBlock
                 label="Shell"
-                command="curl -fsSL https://tejx.dev/install.sh | sh"
+                command="curl -fsSL https://tejx-lang.github.io/install.sh | sh"
               />
             </div>
           </motion.div>
 
-          {/* Step 2: Initialize */}
+          {/* Step 2: Setup Project */}
           <motion.div
             id="init"
             initial={{ opacity: 0, y: 10 }}
@@ -84,16 +84,18 @@ const GetStarted: React.FC = () => {
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-purple-500/50">02</span>
-                <h4 className="text-2xl font-bold">Initialize</h4>
+                <h4 className="text-2xl font-bold">Setup Project</h4>
               </div>
               <p className="text-gray-400 text-sm max-w-2xl">
-                Bootstrap your workspace and project structure.
+                Create a new directory for your project and navigate into it.
               </p>
             </div>
             <div className="w-full max-w-xl bg-black/40 rounded-xl p-5 border border-white/5 font-mono text-sm text-purple-300">
-              <div className="flex gap-3">
-                <span className="text-gray-600 select-none">$</span>
-                <span>tejx init my-app</span>
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-3">
+                  <span className="text-gray-600 select-none">$</span>
+                  <span>mkdir my-app && cd my-app</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -121,15 +123,16 @@ const GetStarted: React.FC = () => {
               <div className="px-4 py-2 bg-white/5 border-b border-white/5 text-xs font-mono text-gray-500 flex justify-between items-center">
                 <span>main.tx</span>
               </div>
-              <pre className="p-6 font-mono text-sm text-orange-200/80 leading-relaxed">
-                {`func add(a: int, b: int) -> int {
-    return a + b;
-}
+              <pre className="p-6 font-mono text-sm text-orange-200/80 leading-relaxed overflow-x-auto">
+                {`import { parse, stringify } from "std:json";
 
-func main() {
-    let result = add(10, 20);
-    print("The result is: ");
-    print(result);
+function main() {
+    let x = 42;
+    let s = stringify(x);
+    print("Stringified x:", s);
+
+    let parsed = parse(s);
+    print("Parsed value:", parsed);
 }`}
               </pre>
             </div>
@@ -156,7 +159,7 @@ func main() {
             <div className="w-full max-w-xl bg-black/40 rounded-xl p-5 border border-white/5 font-mono text-sm text-blue-300">
               <div className="flex gap-3">
                 <span className="text-gray-600 select-none">$</span>
-                <span>tejx run main.tx</span>
+                <span>tejxc main.tx && ./main</span>
               </div>
             </div>
           </motion.div>
