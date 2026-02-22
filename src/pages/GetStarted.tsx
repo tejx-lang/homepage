@@ -53,7 +53,7 @@ const GetStarted: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
+            className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
           >
             <div>
               <h3 className="text-2xl font-bold mb-3 flex items-center gap-3">
@@ -79,7 +79,7 @@ const GetStarted: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
+            className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
           >
             <div>
               <div className="flex items-center gap-3 mb-3">
@@ -106,7 +106,7 @@ const GetStarted: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
+            className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
           >
             <div>
               <div className="flex items-center gap-3 mb-3">
@@ -144,7 +144,7 @@ function main() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            className="p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
+            className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-6"
           >
             <div>
               <div className="flex items-center gap-3 mb-3">
