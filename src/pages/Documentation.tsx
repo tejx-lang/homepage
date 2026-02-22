@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Book,
@@ -35,6 +35,25 @@ const Documentation: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const activeSection = sectionId || "intro";
+
+  // Body scroll locking when sidebar is open
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isSidebarOpen]);
+
+  // Scroll to top when section changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // On mobile, also close the sidebar when navigating to a section
+    setIsSidebarOpen(false);
+  }, [activeSection]);
 
   const sections: DocSection[] = [
     {
@@ -1468,24 +1487,40 @@ function main() {
       {/* Mobile Sidebar Toggle */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="md:hidden fixed bottom-6 right-6 z-50 p-4 rounded-full bg-purple-600 text-white shadow-2xl"
+        className="md:hidden fixed bottom-6 right-6 z-[80] p-4 rounded-full bg-purple-600 text-white shadow-2xl"
       >
         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      <div className="container flex items-start gap-12 py-12 relative">
+      <div className="container flex items-start gap-12 pt-4 pb-12 lg:py-12 relative">
+        {/* Sidebar Backdrop */}
+        <AnimatePresence>
+          {isSidebarOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSidebarOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] md:hidden"
+            />
+          )}
+        </AnimatePresence>
+
         {/* Sidebar */}
         <aside
           className={`
-          fixed inset-0 z-40 bg-black/95 backdrop-blur-xl md:bg-transparent md:backdrop-blur-none
-          md:sticky md:top-24 md:block md:w-72 md:shrink-0 
+          fixed inset-0 z-[60] bg-black backdrop-blur-xl overflow-y-auto
+          md:bg-transparent md:backdrop-blur-none md:sticky md:top-24 md:block md:w-72 md:shrink-0 
           md:h-[calc(100vh-6rem)] md:overflow-y-auto custom-scrollbar
           transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
         >
           <div className="p-8 md:p-0 md:pb-24">
-            <div className="flex items-center gap-3 mb-10 px-2">
+            <div
+              className="flex items-center gap-3 mb-10 px-2 cursor-pointer md:cursor-default"
+              onClick={() => setIsSidebarOpen(false)}
+            >
               <Book className="text-purple-500" />
               <span className="text-xl font-black uppercase tracking-[0.2em]">
                 Docs
@@ -1561,7 +1596,7 @@ function main() {
 
         {/* Main Content */}
         <main
-          className={`flex-grow max-w-4xl pt-4 transition-all duration-300 ${isSidebarOpen ? "blur-sm md:blur-none" : ""}`}
+          className={`flex-grow min-w-0 max-w-4xl pt-4 transition-all duration-300 ${isSidebarOpen ? "blur-sm md:blur-none" : ""}`}
         >
           <motion.div
             key={activeSection}

@@ -4,6 +4,7 @@
  * and place the generated files in this directory.
  */
 
+import { APP_CONFIG } from "../constants";
 import { runtimePatches, createRuntime } from "./runtime";
 
 export interface CompilerResult {
@@ -20,7 +21,7 @@ export class TejXCompiler {
 
   async init() {
     try {
-      const response = await fetch("/tejxc_wasm.wasm");
+      const response = await fetch(APP_CONFIG.COMPILER_WASM_URL);
       const buffer = await response.arrayBuffer();
 
       this.compilerLogs = [];
